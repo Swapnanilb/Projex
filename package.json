@@ -1,0 +1,23 @@
+{
+  "name": "project-management-system",
+  "version": "1.0.0",
+  "description": "A desktop app to manage and organize local project folders",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron .",
+    "dev": "concurrently \"npm run dev-react\" \"wait-on http://localhost:3000 && electron .\"",
+    "dev-react": "cd frontend && npm start",
+    "build": "cd frontend && npm run build",
+    "dist": "electron-builder"
+  },
+  "devDependencies": {
+    "electron": "^27.0.0",
+    "electron-builder": "^24.6.4",
+    "concurrently": "^8.2.2",
+    "wait-on": "^7.2.0"
+  },
+  "dependencies": {
+    "sqlite3": "^5.1.6",
+    "electron-store": "^8.1.0"
+  }
+}
