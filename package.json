@@ -1,23 +1,69 @@
 {
-  "name": "project-management-system",
+  "name": "projex",
   "version": "1.0.0",
-  "description": "A desktop app to manage and organize local project folders",
+  "description": "A modern desktop project manager that helps you organize, tag, and instantly find local folders — designed for developers, creators, and teams.",
+  "author": "Projex Team",
   "main": "main.js",
   "scripts": {
     "start": "electron .",
     "dev": "concurrently \"npm run dev-react\" \"wait-on http://localhost:3000 && electron .\"",
     "dev-react": "cd frontend && npm start",
     "build": "cd frontend && npm run build",
-    "dist": "electron-builder"
+    "dist": "npm run build && electron-builder",
+    "dist:win": "npm run build && electron-builder --win",
+    "dist:mac": "npm run build && electron-builder --mac",
+    "dist:linux": "npm run build && electron-builder --linux",
+    "package": "npm run build && electron-packager . Projex --platform=win32 --arch=x64 --icon=assets/icons/icon.ico --out=dist-packager --ignore=\"node_modules/(electron|electron-builder|electron-packager|concurrently|wait-on)\" --ignore=\".git\" --ignore=\"frontend/src\" --ignore=\"frontend/node_modules\" --ignore=\"dist\" --ignore=\"build\""
   },
   "devDependencies": {
+    "concurrently": "^8.2.2",
     "electron": "^27.0.0",
     "electron-builder": "^24.6.4",
-    "concurrently": "^8.2.2",
+    "electron-packager": "^17.1.2",
     "wait-on": "^7.2.0"
   },
   "dependencies": {
-    "sqlite3": "^5.1.6",
-    "electron-store": "^8.1.0"
+    "electron-store": "^8.1.0",
+    "sql.js": "^1.8.0"
+  },
+  "build": {
+    "appId": "com.projex.app",
+    "productName": "Projex",
+    "copyright": "© 2025 Projex. All rights reserved. Developed with ❤️ by the Projex Team.",
+    "directories": {
+      "output": "dist",
+      "buildResources": "assets/icons"
+    },
+    "files": [
+      "main.js",
+      "preload.js",
+      "frontend/build/**/*",
+      "assets/**/*",
+      "node_modules/**/*"
+    ],
+    "win": {
+      "target": "nsis",
+      "icon": "icon.ico",
+      "signAndEditExecutable": false,
+      "requestedExecutionLevel": "asInvoker",
+      "artifactName": "Projex Setup ${version}.exe"
+    },
+    "nsis": {
+      "oneClick": false,
+      "allowToChangeInstallationDirectory": true,
+      "createDesktopShortcut": true,
+      "createStartMenuShortcut": true,
+      "warningsAsErrors": false,
+      "shortcutName": "Projex",
+      "uninstallDisplayName": "Projex"
+    },
+    "mac": {
+      "target": "dmg",
+      "icon": "assets/icons/icons/mac/icon.icns"
+    },
+    "linux": {
+      "target": "AppImage",
+      "icon": "assets/icons/icons/png/256x256.png"
+    }
   }
 }

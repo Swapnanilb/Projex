@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { StarIcon, FolderIcon, PencilIcon, TrashIcon, ClockIcon, CalendarIcon, ArchiveBoxIcon } from '@heroicons/react/24/outline';
+import { StarIcon, FolderIcon, PencilIcon, TrashIcon, ClockIcon, CalendarIcon, ArchiveBoxIcon, ArrowPathIcon } from '@heroicons/react/24/outline';
 import { StarIcon as StarSolidIcon } from '@heroicons/react/24/solid';
 
 const ProjectCard = ({ project, onUpdate, onDelete, onOpen, showBulkActions, isSelected, onSelect }) => {
@@ -48,10 +48,20 @@ const ProjectCard = ({ project, onUpdate, onDelete, onOpen, showBulkActions, isS
 
   const formatBytes = (bytes) => {
     if (bytes === 0) return '0 B';
+    if (bytes === -1) return 'Error';
     const k = 1024;
-    const sizes = ['B', 'KB', 'MB', 'GB'];
+    const sizes = ['B', 'KB', 'MB', 'GB', 'TB'];
     const i = Math.floor(Math.log(bytes) / Math.log(k));
     return parseFloat((bytes / Math.pow(k, i)).toFixed(1)) + ' ' + sizes[i];
+  };
+
+  const handleRecalculateSize = async () => {
+    try {
+      const newSize = await window.electronAPI.recalculateProjectSize(project.id, project.path);
+      onUpdate(project.id, { folderSize: newSize });
+    } catch (error) {
+      console.error('Failed to recalculate size:', error);
+    }
   };
 
   return (
@@ -90,6 +100,14 @@ const ProjectCard = ({ project, onUpdate, onDelete, onOpen, showBulkActions, isS
             title="Edit project"
           >
             <PencilIcon className="w-4 h-4" />
+          </button>
+          
+          <button
+            onClick={handleRecalculateSize}
+            className="p-1.5 rounded-lg hover:bg-green-100 dark:hover:bg-green-900 text-green-500 hover:text-green-600 transition-all"
+            title="Refresh folder size"
+          >
+            <ArrowPathIcon className="w-4 h-4" />
           </button>
           
           <button
@@ -228,9 +246,12 @@ const ProjectCard = ({ project, onUpdate, onDelete, onOpen, showBulkActions, isS
         <div className="flex items-center gap-1">
           <span className="text-blue-500">📁</span>
           <span>
-            Size: {project.folderSize > 0 ? formatBytes(project.folderSize) : (
-              <span className="text-gray-400 italic">Calculating...</span>
-            )}
+            Size: {project.folderSize > 0 ? formatBytes(project.folderSize) : 
+              project.folderSize === -1 ? (
+                <span className="text-red-500">Error</span>
+              ) : (
+                <span className="text-gray-400 italic">Calculating...</span>
+              )}
           </span>
         </div>
       </div>

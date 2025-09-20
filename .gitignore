@@ -49,3 +49,6 @@ Thumbs.db
 
 # Electron
 out/
+*.yml
+build-instructions.md
+release-checklist.md

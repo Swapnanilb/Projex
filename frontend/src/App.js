@@ -85,6 +85,14 @@ function App() {
     setShowBulkActions(false);
   };
 
+  const handleRecalculateAllSizes = async () => {
+    try {
+      await window.electronAPI.recalculateAllSizes();
+    } catch (error) {
+      console.error('Failed to recalculate all sizes:', error);
+    }
+  };
+
   const handleTagToggle = (tag) => {
     if (tag === null) {
       setSelectedTags([]);
@@ -179,12 +187,14 @@ function App() {
         <header className="bg-white dark:bg-gray-800 shadow-lg border-b border-gray-200 dark:border-gray-700 p-6">
           <div className="flex justify-between items-center mb-6">
             <div className="flex items-center gap-4">
-              <div className="w-14 h-14 rounded-xl overflow-hidden">
-                <img src="/assets/app_logo.png" alt="Project Manager Logo" className="w-full h-full object-cover" />
+              <div className="w-16 h-16 rounded-2xl overflow-hidden shadow-lg bg-gradient-to-br from-blue-500 to-purple-600 p-1">
+                <div className="w-full h-full rounded-xl overflow-hidden bg-white dark:bg-gray-800">
+                  <img src="./assets/app_logo.png" alt="Projex Logo" className="w-full h-full object-contain p-1" />
+                </div>
               </div>
               <div>
-                <h1 className="text-3xl font-bold text-gray-800 dark:text-white">Project Manager</h1>
-                <p className="text-gray-600 dark:text-gray-400">Organize and access your projects efficiently</p>
+                <h1 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent">Projex</h1>
+                <p className="text-gray-600 dark:text-gray-400">A modern desktop project manager for developers, creators, and teams</p>
               </div>
             </div>
             
@@ -305,13 +315,15 @@ function App() {
           {displayProjects.length === 0 ? (
             <div className="text-center py-20">
               <div className="mb-8">
-                <div className="w-24 h-24 rounded-full mx-auto mb-6 overflow-hidden">
-                  <img src="/assets/app_logo.png" alt="Project Manager Logo" className="w-full h-full object-cover" />
+                <div className="w-32 h-32 rounded-3xl mx-auto mb-6 overflow-hidden shadow-2xl bg-gradient-to-br from-blue-500 via-purple-500 to-indigo-600 p-2 transform hover:scale-105 transition-transform duration-300">
+                  <div className="w-full h-full rounded-2xl overflow-hidden bg-white dark:bg-gray-800">
+                    <img src="./assets/app_logo.png" alt="Projex Logo" className="w-full h-full object-contain p-2" />
+                  </div>
                 </div>
-                <h2 className="text-2xl font-bold text-gray-800 dark:text-white mb-2">
+                <h2 className="text-3xl font-bold bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent mb-2">
                   {searchTerm || selectedTags.length > 0 ? 'No projects match your search' : 'No projects yet'}
                 </h2>
-                <p className="text-gray-600 dark:text-gray-400 mb-8 max-w-md mx-auto">
+                <p className="text-gray-600 dark:text-gray-400 mb-8 max-w-md mx-auto text-lg">
                   {searchTerm || selectedTags.length > 0 
                     ? 'Try adjusting your search terms or filters'
                     : 'Start by adding your first project to get organized'
@@ -336,29 +348,38 @@ function App() {
                         {favoriteProjects.length}
                       </span>
                     </h2>
-                    <div className="flex bg-gray-100 dark:bg-gray-700 rounded-xl p-1">
+                    <div className="flex items-center gap-2">
                       <button
-                        onClick={() => setViewMode('grid')}
-                        className={`p-2 rounded-lg transition-colors ${
-                          viewMode === 'grid'
-                            ? 'bg-white dark:bg-gray-600 text-blue-600 dark:text-blue-400 shadow-sm'
-                            : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
-                        }`}
-                        title="Grid view"
+                        onClick={handleRecalculateAllSizes}
+                        className="bg-gray-500 hover:bg-gray-600 text-white px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+                        title="Recalculate all folder sizes"
                       >
-                        <Squares2X2Icon className="w-5 h-5" />
+                        🔄
                       </button>
-                      <button
-                        onClick={() => setViewMode('list')}
-                        className={`p-2 rounded-lg transition-colors ${
-                          viewMode === 'list'
-                            ? 'bg-white dark:bg-gray-600 text-blue-600 dark:text-blue-400 shadow-sm'
-                            : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
-                        }`}
-                        title="List view"
-                      >
-                        <ListBulletIcon className="w-5 h-5" />
-                      </button>
+                      <div className="flex bg-gray-100 dark:bg-gray-700 rounded-xl p-1">
+                        <button
+                          onClick={() => setViewMode('grid')}
+                          className={`p-2 rounded-lg transition-colors ${
+                            viewMode === 'grid'
+                              ? 'bg-white dark:bg-gray-600 text-blue-600 dark:text-blue-400 shadow-sm'
+                              : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+                          }`}
+                          title="Grid view"
+                        >
+                          <Squares2X2Icon className="w-5 h-5" />
+                        </button>
+                        <button
+                          onClick={() => setViewMode('list')}
+                          className={`p-2 rounded-lg transition-colors ${
+                            viewMode === 'list'
+                              ? 'bg-white dark:bg-gray-600 text-blue-600 dark:text-blue-400 shadow-sm'
+                              : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+                          }`}
+                          title="List view"
+                        >
+                          <ListBulletIcon className="w-5 h-5" />
+                        </button>
+                      </div>
                     </div>
                   </div>
                   <div className="animate-fade-in">
@@ -404,29 +425,38 @@ function App() {
                         {projects.length}
                       </span>
                     </h2>
-                    <div className="flex bg-gray-100 dark:bg-gray-700 rounded-xl p-1">
+                    <div className="flex items-center gap-2">
                       <button
-                        onClick={() => setViewMode('grid')}
-                        className={`p-2 rounded-lg transition-colors ${
-                          viewMode === 'grid'
-                            ? 'bg-white dark:bg-gray-600 text-blue-600 dark:text-blue-400 shadow-sm'
-                            : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
-                        }`}
-                        title="Grid view"
+                        onClick={handleRecalculateAllSizes}
+                        className="bg-gray-500 hover:bg-gray-600 text-white px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+                        title="Recalculate all folder sizes"
                       >
-                        <Squares2X2Icon className="w-5 h-5" />
+                        🔄
                       </button>
-                      <button
-                        onClick={() => setViewMode('list')}
-                        className={`p-2 rounded-lg transition-colors ${
-                          viewMode === 'list'
-                            ? 'bg-white dark:bg-gray-600 text-blue-600 dark:text-blue-400 shadow-sm'
-                            : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
-                        }`}
-                        title="List view"
-                      >
-                        <ListBulletIcon className="w-5 h-5" />
-                      </button>
+                      <div className="flex bg-gray-100 dark:bg-gray-700 rounded-xl p-1">
+                        <button
+                          onClick={() => setViewMode('grid')}
+                          className={`p-2 rounded-lg transition-colors ${
+                            viewMode === 'grid'
+                              ? 'bg-white dark:bg-gray-600 text-blue-600 dark:text-blue-400 shadow-sm'
+                              : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+                          }`}
+                          title="Grid view"
+                        >
+                          <Squares2X2Icon className="w-5 h-5" />
+                        </button>
+                        <button
+                          onClick={() => setViewMode('list')}
+                          className={`p-2 rounded-lg transition-colors ${
+                            viewMode === 'list'
+                              ? 'bg-white dark:bg-gray-600 text-blue-600 dark:text-blue-400 shadow-sm'
+                              : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
+                          }`}
+                          title="List view"
+                        >
+                          <ListBulletIcon className="w-5 h-5" />
+                        </button>
+                      </div>
                     </div>
                   </div>
                   <div className="animate-fade-in">

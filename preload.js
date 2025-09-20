@@ -9,6 +9,9 @@ contextBridge.exposeInMainWorld('electronAPI', {
   openFolder: (path) => ipcRenderer.invoke('open-folder', path),
   updateLastOpened: (id) => ipcRenderer.invoke('update-last-opened', id),
   getFormattedSize: (bytes) => ipcRenderer.invoke('get-formatted-size', bytes),
+  recalculateProjectSize: (id, path) => ipcRenderer.invoke('recalculate-project-size', id, path),
+  recalculateAllSizes: () => ipcRenderer.invoke('recalculate-all-sizes'),
+  getFolderSizeByTypes: (path, types) => ipcRenderer.invoke('get-folder-size-by-types', path, types),
   onProjectSizeUpdated: (callback) => {
     ipcRenderer.on('project-size-updated', (event, data) => callback(data));
     return () => ipcRenderer.removeAllListeners('project-size-updated');
