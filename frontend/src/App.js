@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { PlusIcon, MagnifyingGlassIcon, SunIcon, MoonIcon, Squares2X2Icon, ListBulletIcon } from '@heroicons/react/24/outline';
+import { PlusIcon, MagnifyingGlassIcon, SunIcon, MoonIcon, Squares2X2Icon, ListBulletIcon, ArrowPathIcon } from '@heroicons/react/24/outline';
 import { useProjects } from './hooks/useProjects';
 import { useTheme } from './hooks/useTheme';
 import ProjectCard from './components/ProjectCard';
@@ -151,7 +151,7 @@ function App() {
 
   return (
     <div 
-      className={`flex h-screen bg-gray-100 dark:bg-gray-900 transition-colors relative ${
+      className={`flex h-screen bg-orange-200 dark:bg-gray-900 transition-colors relative ${
         isDragOver ? 'bg-blue-50 dark:bg-blue-900/20' : ''
       }`}
       onDragOver={handleDragOver}
@@ -177,14 +177,20 @@ function App() {
         sortBy={sortBy}
         onSortChange={setSortBy}
         showFavoritesOnly={showFavoritesOnly}
-        onToggleFavorites={() => setShowFavoritesOnly(!showFavoritesOnly)}
+        onToggleFavorites={() => {
+          setShowFavoritesOnly(!showFavoritesOnly);
+          if (!showFavoritesOnly) setShowArchived(false);
+        }}
         showArchived={showArchived}
-        onToggleArchived={() => setShowArchived(!showArchived)}
+        onToggleArchived={() => {
+          setShowArchived(!showArchived);
+          if (!showArchived) setShowFavoritesOnly(false);
+        }}
         projects={projects}
       />
       
       <div className="flex-1 flex flex-col">
-        <header className="bg-white dark:bg-gray-800 shadow-lg border-b border-gray-200 dark:border-gray-700 p-6">
+        <header className="bg-orange-200 dark:bg-gray-800 shadow-lg border-b border-orange-300 dark:border-gray-700 p-6">
           <div className="flex justify-between items-center mb-6">
             <div className="flex items-center gap-4">
               <div className="w-16 h-16 rounded-2xl overflow-hidden shadow-lg bg-gradient-to-br from-blue-500 to-purple-600 p-1">
@@ -244,7 +250,7 @@ function App() {
               placeholder="Search projects by name, path, or tags..."
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="w-full pl-12 pr-4 py-4 border border-gray-300 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-white dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 text-lg transition-colors"
+              className="w-full pl-12 pr-4 py-4 border border-orange-300 dark:border-gray-600 rounded-xl focus:outline-none focus:ring-2 focus:ring-blue-500 focus:border-blue-500 bg-orange-100 dark:bg-gray-700 text-gray-900 dark:text-white placeholder-gray-500 dark:placeholder-gray-400 text-lg transition-colors"
             />
           </div>
           
@@ -311,7 +317,7 @@ function App() {
           </div>
         </header>
 
-        <main className="flex-1 p-6 overflow-auto bg-gray-50 dark:bg-gray-900 scrollbar-hide" style={{scrollbarWidth: 'none', msOverflowStyle: 'none'}}>
+        <main className="flex-1 p-6 overflow-auto bg-orange-200 dark:bg-gray-900 scrollbar-hide" style={{scrollbarWidth: 'none', msOverflowStyle: 'none'}}>
           {displayProjects.length === 0 ? (
             <div className="text-center py-20">
               <div className="mb-8">
@@ -351,17 +357,18 @@ function App() {
                     <div className="flex items-center gap-2">
                       <button
                         onClick={handleRecalculateAllSizes}
-                        className="bg-gray-500 hover:bg-gray-600 text-white px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+                        className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center gap-2"
                         title="Recalculate all folder sizes"
                       >
-                        🔄
+                        <ArrowPathIcon className="w-4 h-4" />
+                        Refresh Sizes
                       </button>
                       <div className="flex bg-gray-100 dark:bg-gray-700 rounded-xl p-1">
                         <button
                           onClick={() => setViewMode('grid')}
                           className={`p-2 rounded-lg transition-colors ${
                             viewMode === 'grid'
-                              ? 'bg-white dark:bg-gray-600 text-blue-600 dark:text-blue-400 shadow-sm'
+                              ? 'bg-gray-200 dark:bg-gray-600 text-blue-600 dark:text-blue-400 shadow-sm'
                               : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
                           }`}
                           title="Grid view"
@@ -372,7 +379,7 @@ function App() {
                           onClick={() => setViewMode('list')}
                           className={`p-2 rounded-lg transition-colors ${
                             viewMode === 'list'
-                              ? 'bg-white dark:bg-gray-600 text-blue-600 dark:text-blue-400 shadow-sm'
+                              ? 'bg-gray-200 dark:bg-gray-600 text-blue-600 dark:text-blue-400 shadow-sm'
                               : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
                           }`}
                           title="List view"
@@ -428,17 +435,18 @@ function App() {
                     <div className="flex items-center gap-2">
                       <button
                         onClick={handleRecalculateAllSizes}
-                        className="bg-gray-500 hover:bg-gray-600 text-white px-3 py-2 rounded-lg text-sm font-medium transition-colors"
+                        className="bg-gradient-to-r from-green-500 to-emerald-600 hover:from-green-600 hover:to-emerald-700 text-white px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200 shadow-lg hover:shadow-xl transform hover:-translate-y-0.5 flex items-center gap-2"
                         title="Recalculate all folder sizes"
                       >
-                        🔄
+                        <ArrowPathIcon className="w-4 h-4" />
+                        Refresh Sizes
                       </button>
                       <div className="flex bg-gray-100 dark:bg-gray-700 rounded-xl p-1">
                         <button
                           onClick={() => setViewMode('grid')}
                           className={`p-2 rounded-lg transition-colors ${
                             viewMode === 'grid'
-                              ? 'bg-white dark:bg-gray-600 text-blue-600 dark:text-blue-400 shadow-sm'
+                              ? 'bg-gray-200 dark:bg-gray-600 text-blue-600 dark:text-blue-400 shadow-sm'
                               : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
                           }`}
                           title="Grid view"
@@ -449,7 +457,7 @@ function App() {
                           onClick={() => setViewMode('list')}
                           className={`p-2 rounded-lg transition-colors ${
                             viewMode === 'list'
-                              ? 'bg-white dark:bg-gray-600 text-blue-600 dark:text-blue-400 shadow-sm'
+                              ? 'bg-gray-200 dark:bg-gray-600 text-blue-600 dark:text-blue-400 shadow-sm'
                               : 'text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-300'
                           }`}
                           title="List view"

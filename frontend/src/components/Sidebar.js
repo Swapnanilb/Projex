@@ -3,7 +3,7 @@ import { TagIcon, FunnelIcon, Bars3BottomLeftIcon, StarIcon, ArchiveBoxIcon } fr
 
 const Sidebar = ({ allTags, tagUsageCount, selectedTags, onTagToggle, sortBy, onSortChange, showFavoritesOnly, onToggleFavorites, showArchived, onToggleArchived, projects }) => {
   return (
-    <div className="w-72 bg-gray-50 dark:bg-gray-900 p-6 border-r border-gray-200 dark:border-gray-700 h-full overflow-y-auto scrollbar-hide" style={{scrollbarWidth: 'none', msOverflowStyle: 'none'}}>
+    <div className="w-72 bg-orange-200 dark:bg-gray-900 p-6 border-r border-orange-300 dark:border-gray-700 h-full overflow-y-auto scrollbar-hide" style={{scrollbarWidth: 'none', msOverflowStyle: 'none'}}>
       <div className="mb-6">
         <h3 className="text-xl font-bold mb-4 flex items-center gap-3 text-gray-800 dark:text-white">
           <div className="p-2 bg-blue-100 dark:bg-blue-900 rounded-lg">
@@ -12,7 +12,7 @@ const Sidebar = ({ allTags, tagUsageCount, selectedTags, onTagToggle, sortBy, on
           Filters
         </h3>
         
-        <div className="bg-white dark:bg-gray-800 rounded-xl p-3 shadow-sm border border-gray-200 dark:border-gray-700 mb-4 space-y-2">
+        <div className="bg-orange-100 dark:bg-gray-800 rounded-xl p-3 shadow-sm border border-orange-200 dark:border-gray-700 mb-4 space-y-2">
           <button
             onClick={onToggleFavorites}
             className={`w-full flex items-center gap-3 p-4 rounded-xl transition-all duration-200 group ${
@@ -76,7 +76,7 @@ const Sidebar = ({ allTags, tagUsageCount, selectedTags, onTagToggle, sortBy, on
           </button>
         </div>
         
-        <div className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-200 dark:border-gray-700">
+        <div className="bg-orange-100 dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-orange-200 dark:border-gray-700">
           <div className="flex items-center gap-2 mb-3">
             <TagIcon className="w-4 h-4 text-gray-500 dark:text-gray-400" />
             <span className="font-medium text-gray-700 dark:text-gray-300">Tags</span>
@@ -129,11 +129,11 @@ const Sidebar = ({ allTags, tagUsageCount, selectedTags, onTagToggle, sortBy, on
           Sort
         </h3>
         
-        <div className="bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-200 dark:border-gray-700">
+        <div className="bg-orange-100 dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-orange-200 dark:border-gray-700">
           <select
             value={sortBy}
             onChange={(e) => onSortChange(e.target.value)}
-            className="w-full p-3 border border-gray-300 dark:border-gray-600 rounded-lg bg-white dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
+            className="w-full p-3 border border-orange-300 dark:border-gray-600 rounded-lg bg-orange-200 dark:bg-gray-700 text-gray-900 dark:text-white focus:ring-2 focus:ring-blue-500 focus:border-blue-500 transition-colors"
           >
             <option value="dateAdded">📅 Date Added (Newest)</option>
             <option value="name">🔤 Name (A-Z)</option>
@@ -142,7 +142,7 @@ const Sidebar = ({ allTags, tagUsageCount, selectedTags, onTagToggle, sortBy, on
         </div>
       </div>
       
-      <div className="mt-8 bg-white dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-gray-200 dark:border-gray-700">
+      <div className="mt-8 bg-orange-100 dark:bg-gray-800 rounded-xl p-4 shadow-sm border border-orange-200 dark:border-gray-700">
         <h4 className="font-semibold text-gray-800 dark:text-white mb-3 flex items-center gap-2">
           <span className="text-blue-500">📊</span>
           Statistics

@@ -78,7 +78,8 @@ export const useProjects = () => {
 
   const filteredProjects = projects.filter(project => {
     const matchesSearch = project.name.toLowerCase().includes(searchTerm.toLowerCase()) ||
-                         project.path.toLowerCase().includes(searchTerm.toLowerCase());
+                         project.path.toLowerCase().includes(searchTerm.toLowerCase()) ||
+                         project.tags.some(tag => tag.toLowerCase().includes(searchTerm.toLowerCase()));
     const matchesTags = selectedTags.length === 0 || 
                        selectedTags.some(tag => project.tags.includes(tag));
     const matchesArchive = showArchived ? project.isArchived : !project.isArchived;

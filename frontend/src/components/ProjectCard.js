@@ -66,7 +66,7 @@ const ProjectCard = ({ project, onUpdate, onDelete, onOpen, showBulkActions, isS
 
   return (
     <div 
-      className={`bg-white dark:bg-gray-800 rounded-xl shadow-lg p-4 hover:shadow-xl transition-all duration-300 border animate-fade-in group relative cursor-pointer ${
+      className={`bg-orange-100 dark:bg-gray-800 rounded-xl shadow-lg p-4 hover:shadow-xl transition-all duration-300 border animate-fade-in group relative cursor-pointer ${
         isSelected 
           ? 'border-blue-500 bg-blue-50 dark:bg-blue-900/20' 
           : 'border-gray-200 dark:border-gray-700'
@@ -136,7 +136,7 @@ const ProjectCard = ({ project, onUpdate, onDelete, onOpen, showBulkActions, isS
 
       {isEditing && (
         <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-          <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-md shadow-2xl border border-gray-200 dark:border-gray-700">
+          <div className="bg-orange-100 dark:bg-gray-800 rounded-2xl p-6 w-full max-w-md shadow-2xl border border-orange-200 dark:border-gray-700">
             <h3 className="text-xl font-bold text-gray-800 dark:text-white mb-6 flex items-center gap-2">
               <PencilIcon className="w-5 h-5 text-blue-500" />
               Edit Project

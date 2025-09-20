@@ -33,7 +33,7 @@ const AddProjectModal = ({ isOpen, onClose, onAdd, initialData }) => {
       onAdd({
         name: projectName,
         path: projectPath,
-        tags: tags.split(',').map(tag => tag.trim()).filter(Boolean)
+        tags: tags.split(',').map(tag => tag.trim()).filter(Boolean).map(tag => tag.charAt(0).toUpperCase() + tag.slice(1).toLowerCase())
       });
       handleClose();
     }
@@ -52,7 +52,7 @@ const AddProjectModal = ({ isOpen, onClose, onAdd, initialData }) => {
 
   return (
     <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50 p-4">
-      <div className="bg-white dark:bg-gray-800 rounded-2xl p-6 w-full max-w-lg shadow-2xl border border-gray-200 dark:border-gray-700">
+      <div className="bg-orange-100 dark:bg-gray-800 rounded-2xl p-6 w-full max-w-lg shadow-2xl border border-orange-200 dark:border-gray-700">
         <div className="flex justify-between items-center mb-6">
           <h3 className="text-xl font-bold text-gray-800 dark:text-white flex items-center gap-2">
             <PlusIcon className="w-5 h-5 text-blue-500" />
