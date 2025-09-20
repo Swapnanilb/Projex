@@ -2,7 +2,7 @@
 
 All notable changes to the Project Management System will be documented in this file.
 
-## [1.0.0](https://github.com/yourusername/project-management-system/releases/tag/v1.0.0) - 2025-01-15
+## [1.0.0](https://github.com/Swapnanilb/Projex/releases/tag/v1.0.0) - 2025-01-15
 
 ### 🎯 Core Features
 - **Project Management** - Add, edit, delete, and organize local project folders
